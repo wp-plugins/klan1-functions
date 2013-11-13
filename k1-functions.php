@@ -4,7 +4,7 @@
   Plugin Name: Klan1 Common WP Functions
   Plugin URI: http://www.klan1.com
   Description: Basic functions needed by our others plugins and templates.
-  Version: 0.2.1
+  Version: 0.3
   Author: Alejandro Trujillo J. - J0hnD03
   Author URI: http://www.facebook.com/j0hnd03
   Note: This pluging includes TimThumb by Ben Gillbanks and Mark Maunder
@@ -33,7 +33,7 @@
 if (!defined("K1_FUNCTIONS")) {
 
     define("K1_FUNCTIONS", TRUE);
-    define("K1_FUNCTIONS_VER", 0.2);
+    define("K1_FUNCTIONS_VER", 0.3);
     define("K1_FUNCTIONS_URL", plugin_dir_url(__FILE__));
     define("K1_FUNCTIONS_PATH", plugin_dir_path(__FILE__));
     define("K1_FUNCTIONS_TIMTHUMB_FILE", K1_FUNCTIONS_URL . "tools/timthumb/timthumb.php");
@@ -46,7 +46,6 @@ if (!defined("K1_FUNCTIONS")) {
          * @param Integer $post_id If is empty, we will try to get the POST ID from the global $post var
          * @return String The FEATURED IMAGE URL
          */
-        //OLD: k1_get_post_thumb_url
         function k1_get_post_thumb_url($post_id = null) {
             if (empty($post_id)) {
                 global $post;
@@ -73,6 +72,14 @@ if (!defined("K1_FUNCTIONS")) {
             }
         }
 
+        // Compatibility with our old function names 
+        if (!function_exists("k1_get_wp_thumb_url")) {
+
+            function k1_get_wp_thumb_url($post_id = null) {
+                return k1_get_post_thumb_url($post_id = null);
+            }
+
+        }
     }
 
     if (!function_exists("k1_get_timthumb_img_url")) {
@@ -106,6 +113,14 @@ if (!defined("K1_FUNCTIONS")) {
             }
         }
 
+        // Compatibility with our old function names 
+        if (!function_exists("k1_get_thumb_img_url")) {
+
+            function k1_get_thumb_img_url($post_id = null, $width = 0, $height = 0, $crop = 1, $align = "t") {
+                return k1_get_post_timthumb_img_url($post_id = null, $width = 0, $height = 0, $crop = 1, $align = "t");
+            }
+
+        }
     }
     if (!function_exists("k1_get_thumb_img_html")) {
 
@@ -146,6 +161,14 @@ if (!defined("K1_FUNCTIONS")) {
             }
         }
 
+        // Compatibility with our old function names 
+        if (!function_exists("k1_get_thumb_img")) {
+
+            function k1_get_thumb_img($post_id = null, $resize = false, $width = 0, $height = 0, $crop = 1, $align = "t") {
+                return k1_get_post_timthumb_img_url($post_id = null, $resize = false, $width = 0, $height = 0, $crop = 1, $align = "t");
+            }
+
+        }
     }
     if (!function_exists("k1_get_plain_post_content")) {
 
