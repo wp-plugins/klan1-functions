@@ -1,4 +1,4 @@
-=== Plugin Name ===
+=== Klan1 - Developers Functions ===
 Contributors: k1-j0hnd03
 Donate link: http://klan1.com/
 Tags: developer, basic functions, klan1
