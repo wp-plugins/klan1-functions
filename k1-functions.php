@@ -41,18 +41,19 @@ if (!defined("K1_FUNCTIONS")) {
     if (!function_exists("k1_get_post_thumb_url")) {
 
         /**
-         * get the URL for the FEATURED IMAGE defined in a POST or the FIRST image if not defined and there is at leat one image. Returns NULL on no attachments.
-         * @param Integer $post_id
-         * @return String
+         * Get the URL for the FEATURED IMAGE (full sized) defined in a POST/PAGE. If not defined returns the FIRST image if there is at leat one. Returns NULL if no images (jpg,png,gif) attachments.
+         * @global WP_Post $post
+         * @param Integer $post_id If is empty, we will try to get the POST ID from the global $post var
+         * @return String The FEATURED IMAGE URL
          */
         //OLD: k1_get_post_thumb_url
-        function k1_get_post_thumb_url($post_id) {
+        function k1_get_post_thumb_url($post_id = null) {
             if (empty($post_id)) {
                 global $post;
                 if (!empty($post->ID)) {
                     $post_id = $post->ID;
                 } else {
-                    return new WP_Error('no $post_id', __("\$post_id is unknow on k1_get_post_thumb_url()"));
+                    return new WP_Error('no $post_id', __("\$post_id is unknow on " . __FUNCTION__ . "()"));
                 }
             }
             $thumb_args = array(
@@ -79,15 +80,15 @@ if (!defined("K1_FUNCTIONS")) {
         /**
          * Returns the full URL using timthumb script resizing the post thumb img
          * @global WP_Post $post
-         * @param Integer $post_id
-         * @param Integer $width
-         * @param Integer $height
-         * @param Integer $crop
-         * @param String $align
+         * @param Integer $post_id If is empty, we will try to get the POST ID from the global $post var
+         * @param Integer $width See TIMTHUMB documentation: http://www.binarymoon.co.uk/2012/02/complete-timthumb-parameters-guide/
+         * @param Integer $height See TIMTHUMB documentation: http://www.binarymoon.co.uk/2012/02/complete-timthumb-parameters-guide/
+         * @param Integer $crop See TIMTHUMB documentation: http://www.binarymoon.co.uk/2011/03/timthumb-proportional-scaling-security-improvements/
+         * @param String $align See TIMTHUMB documentation: http://www.binarymoon.co.uk/2010/08/timthumb-part-4-moving-crop-location/
          * @return \WP_Error|null
          */
         //OLD: k1_get_thumb_img_url
-        function k1_get_post_timthumb_img_url($post_id, $width = false, $height = false, $crop = 1, $align = "t") {
+        function k1_get_post_timthumb_img_url($post_id = null, $width = 0, $height = 0, $crop = 1, $align = "t") {
             if (empty($post_id)) {
                 global $post;
                 if (!empty($post->ID)) {
@@ -98,7 +99,7 @@ if (!defined("K1_FUNCTIONS")) {
             }
             $wp_thumb_url = k1_get_post_thumb_url($post_id);
             if (!empty($wp_thumb_url)) {
-                $img_code = K1_FUNCTIONS_TIMTHUMB_FILE . "?src=" . $wp_thumb_url . "&w=$width&h=$height&zc=$crop&q=90&a=$align";
+                $img_code = K1_FUNCTIONS_TIMTHUMB_FILE . "?src=" . $wp_thumb_url . "&w=$width&h=$height&zc=$crop&q=100&a=$align";
                 return $img_code;
             } else {
                 return null;
@@ -109,33 +110,35 @@ if (!defined("K1_FUNCTIONS")) {
     if (!function_exists("k1_get_thumb_img_html")) {
 
         /**
-         * return the FULL IMG HTML tag for the post featured image
+         * return the FULL IMG HTML tag for the post featured image using TIMTHUMB or not
          * @global WP_Post $post
-         * @param type $post_id
-         * @param type $resize
-         * @param type $width
-         * @param type $height
-         * @param type $crop
-         * @param type $align
+         * @param Integer $post_id If is empty, we will try to get the POST ID from the global $post var
+         * @param Boolean $resize If false, just returns the IMG URL
+         * @param Integer $width See TIMTHUMB documentation: http://www.binarymoon.co.uk/2012/02/complete-timthumb-parameters-guide/
+         * @param Integer $height See TIMTHUMB documentation: http://www.binarymoon.co.uk/2012/02/complete-timthumb-parameters-guide/
+         * @param Integer $crop See TIMTHUMB documentation: http://www.binarymoon.co.uk/2011/03/timthumb-proportional-scaling-security-improvements/
+         * @param String $align See TIMTHUMB documentation: http://www.binarymoon.co.uk/2010/08/timthumb-part-4-moving-crop-location/
          * @return string|boolean|\WP_Error
+         * 
+         * TODO: Get the attachment metadata to make the longdesc="" and alt="" IMG properties.
          */
         // OLD: k1_get_thumb_img
-        function k1_get_post_thumb_img_html($post_id, $resize = false, $width = false, $height = false, $crop = 1, $align = "t") {
+        function k1_get_post_thumb_img_html($post_id = null, $resize = false, $width = 0, $height = 0, $crop = 1, $align = "t") {
             if (empty($post_id)) {
                 global $post;
                 if (!empty($post->ID)) {
                     $post_id = $post->ID;
                 } else {
-                    return new WP_Error('no $post_id', __("\$post_id is unknow on k1_get_thumb_img()"));
+                    return new WP_Error('no $post_id', __("\$post_id is unknow on " . __FUNCTION__ . "()"));
                 }
             }
             $wp_thumb_url = k1_get_post_thumb_url($post_id);
             $timthumb_url = k1_get_post_timthumb_img_url($post_id, $width, $height, $crop, $align);
             if (!empty($wp_thumb_url) && !empty($timthumb_url)) {
                 if ($resize) {
-                    $img_code = "<img src='{$timthumb_url}'  alt='" . get_the_title() . "' width='$width' height='$height'/>";
+                    $img_code = "<img src='{$timthumb_url}' width='$width' height='$height'/>";
                 } else {
-                    $img_code = "<img src='{$wp_thumb_url}' longdesc='" . get_permalink() . "' alt='" . get_the_title() . "' />";
+                    $img_code = "<img src='{$wp_thumb_url}' />";
                 }
                 return $img_code;
             } else {
@@ -146,23 +149,18 @@ if (!defined("K1_FUNCTIONS")) {
     }
     if (!function_exists("k1_get_plain_post_content")) {
 
-//function k1_get_post_content($loop_options) {
-//    query_posts($loop_options);
-//    if (have_posts()) {
-//        the_post();
-//        the_content();
-//    } else {
-//        return false;
-//    }
-//}
-
+        /**
+         * Function taken from somewhere on the internet
+         * @param Integer $post_id If is empty, we will try to get the POST ID from the global $post var
+         * @return string
+         */
         function k1_get_plain_post_content($post_id = null) { // Fakes an excerpt if needed
             if (empty($post_id)) {
                 global $post;
                 if (!empty($post->ID)) {
                     $post_id = $post->ID;
                 } else {
-                    return new WP_Error('no $post_id', __("\$post_id is unknow on k1_get_thumb_img()"));
+                    return new WP_Error('no $post_id', __("\$post_id is unknow on " . __FUNCTION__ . "()"));
                 }
             }
 
@@ -198,5 +196,4 @@ if (!defined("K1_FUNCTIONS")) {
 
     }
 }
-
 ?>
