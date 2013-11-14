@@ -151,7 +151,7 @@ if (!defined("K1_FUNCTIONS")) {
             $timthumb_url = k1_get_post_timthumb_img_url($post_id, $width, $height, $crop, $align);
             if (!empty($wp_thumb_url) && !empty($timthumb_url)) {
                 if ($resize) {
-                    $img_code = "<img src='{$timthumb_url}' width='$width' height='$height'/>";
+                    $img_code = "<img src='{$timthumb_url}' width='$width' height='$height' />";
                 } else {
                     $img_code = "<img src='{$wp_thumb_url}' />";
                 }
