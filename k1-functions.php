@@ -4,7 +4,7 @@
   Plugin Name: Klan1 Common WP Functions
   Plugin URI: http://www.klan1.com
   Description: Basic functions needed by our others plugins and templates.
-  Version: 0.3.1
+  Version: 0.3.3
   Author: Alejandro Trujillo J. - J0hnD03
   Author URI: http://www.facebook.com/j0hnd03
   Note: This pluging includes TimThumb by Ben Gillbanks and Mark Maunder
@@ -76,7 +76,7 @@ if (!defined("K1_FUNCTIONS")) {
         if (!function_exists("k1_get_wp_thumb_url")) {
 
             function k1_get_wp_thumb_url($post_id = null) {
-                return k1_get_post_thumb_url($post_id = null);
+                return k1_get_post_thumb_url($post_id);
             }
 
         }
@@ -117,7 +117,7 @@ if (!defined("K1_FUNCTIONS")) {
         if (!function_exists("k1_get_thumb_img_url")) {
 
             function k1_get_thumb_img_url($post_id = null, $width = 0, $height = 0, $crop = 1, $align = "t") {
-                return k1_get_post_timthumb_img_url($post_id = null, $width = 0, $height = 0, $crop = 1, $align = "t");
+                return k1_get_post_timthumb_img_url($post_id, $width, $height, $crop, $align);
             }
 
         }
@@ -165,7 +165,7 @@ if (!defined("K1_FUNCTIONS")) {
         if (!function_exists("k1_get_thumb_img")) {
 
             function k1_get_thumb_img($post_id = null, $resize = false, $width = 0, $height = 0, $crop = 1, $align = "t") {
-                return k1_get_post_thumb_img_html($post_id = null, $resize = false, $width = 0, $height = 0, $crop = 1, $align = "t");
+                return k1_get_post_thumb_img_html($post_id, $resize, $width, $height, $crop, $align);
             }
 
         }
@@ -219,4 +219,3 @@ if (!defined("K1_FUNCTIONS")) {
 
     }
 }
-?>
