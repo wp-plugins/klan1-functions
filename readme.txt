@@ -15,39 +15,30 @@ Basic functions needed by our others plugins and templates.
 This functions are for those needs to resize images on their templates or plugins all the time.
 
 `<?php echo k1_get_post_thumb_url($post_id = null); ?>`
-/**
- * Get the URL for the FEATURED IMAGE (full sized) defined in a POST/PAGE. If not defined returns the FIRST image if there is at leat one. Returns NULL if no images (jpg,png,gif) attachments.
- * @global WP_Post $post
- * @param Integer $post_id If is empty, we will try to get the POST ID from the global $post var
- * @return String The FEATURED IMAGE URL
- */
+Get the URL for the FEATURED IMAGE (full sized) defined in a POST/PAGE. If not defined returns the FIRST image if there is at leat one. Returns NULL if no images (jpg,png,gif) attachments.
+* **@param Integer $post_id** If is empty, we will try to get the POST ID from the global $post var
+* **@return String** The FEATURED IMAGE URL
+
 
 `<?php echo k1_get_post_timthumb_img_url($post_id = null, $width = 0, $height = 0, $crop = 1, $align = "t"); ?>`
-/**
- * Returns the full URL using timthumb script resizing the post thumb img
- * @global WP_Post $post
- * @param Integer $post_id If is empty, we will try to get the POST ID from the global $post var
- * @param Integer $width See TIMTHUMB documentation: http://www.binarymoon.co.uk/2012/02/complete-timthumb-parameters-guide/
- * @param Integer $height See TIMTHUMB documentation: http://www.binarymoon.co.uk/2012/02/complete-timthumb-parameters-guide/
- * @param Integer $crop See TIMTHUMB documentation: http://www.binarymoon.co.uk/2011/03/timthumb-proportional-scaling-security-improvements/
- * @param String $align See TIMTHUMB documentation: http://www.binarymoon.co.uk/2010/08/timthumb-part-4-moving-crop-location/
- * @return \WP_Error|null
- */
+Returns the full URL using timthumb script resizing the post thumb img
+* **@param Integer $post_id** If is empty, we will try to get the POST ID from the global $post var
+* **@param Integer $width** See TIMTHUMB documentation: http://www.binarymoon.co.uk/2012/02/complete-timthumb-parameters-guide/
+* **@param Integer $height** See TIMTHUMB documentation: http://www.binarymoon.co.uk/2012/02/complete-timthumb-parameters-guide/
+* **@param Integer $crop** See TIMTHUMB documentation: http://www.binarymoon.co.uk/2011/03/timthumb-proportional-scaling-security-improvements/
+* **@param String $align** See TIMTHUMB documentation: http://www.binarymoon.co.uk/2010/08/timthumb-part-4-moving-crop-location/
 
 `<?php echo k1_get_post_thumb_img_html($post_id = null, $resize = false, $width = 0, $height = 0, $crop = 1, $align = "t"); ?>`
-/**
- * return the FULL IMG HTML tag for the post featured image using TIMTHUMB or not
- * @global WP_Post $post
- * @param Integer $post_id If is empty, we will try to get the POST ID from the global $post var
- * @param Boolean $resize If false, just returns the IMG URL
- * @param Integer $width See TIMTHUMB documentation: http://www.binarymoon.co.uk/2012/02/complete-timthumb-parameters-guide/
- * @param Integer $height See TIMTHUMB documentation: http://www.binarymoon.co.uk/2012/02/complete-timthumb-parameters-guide/
- * @param Integer $crop See TIMTHUMB documentation: http://www.binarymoon.co.uk/2011/03/timthumb-proportional-scaling-security-improvements/
- * @param String $align See TIMTHUMB documentation: http://www.binarymoon.co.uk/2010/08/timthumb-part-4-moving-crop-location/
- * @return string|boolean|\WP_Error
- * 
- * TODO: Get the attachment metadata to make the longdesc="" and alt="" IMG properties.
- */
+return the FULL IMG HTML tag for the post featured image using TIMTHUMB or not
+* **@param Integer $post_id** If is empty, we will try to get the POST ID from the global $post var
+* **@param Boolean $resize** If false, just returns the IMG URL
+* **@param Integer $width** See TIMTHUMB documentation: http://www.binarymoon.co.uk/2012/02/complete-timthumb-parameters-guide/
+* **@param Integer $height** See TIMTHUMB documentation: http://www.binarymoon.co.uk/2012/02/complete-timthumb-parameters-guide/
+* **@param Integer $crop** See TIMTHUMB documentation: http://www.binarymoon.co.uk/2011/03/timthumb-proportional-scaling-security-improvements/
+* **@param String $align** See TIMTHUMB documentation: http://www.binarymoon.co.uk/2010/08/timthumb-part-4-moving-crop-location/
+
+TODO: Get the attachment metadata to make the longdesc="" and alt="" IMG properties.
+
 
 == Installation ==
 
