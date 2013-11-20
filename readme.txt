@@ -30,7 +30,7 @@ Returns the full URL using timthumb script to resize the post featured image
 * **`$crop`** See TIMTHUMB documentation: http://www.binarymoon.co.uk/2011/03/timthumb-proportional-scaling-security-improvements/
 * **`$align`** See TIMTHUMB documentation: http://www.binarymoon.co.uk/2010/08/timthumb-part-4-moving-crop-location/
 
-*NOTE*: If jut one height or width is defined as zero (0) will conserve image proportion, if is not defined it will be default value.
+*NOTE*: If you just define one height or width as zero (0) the other one will conserve image proportion, if is not defined it will be default value.
 
 `<?php echo k1_get_post_thumb_img_html($post_id = null, $resize = false, $width = 80, $height = 50, $crop = 1, $align = "t"); ?>`
 
@@ -43,7 +43,7 @@ return the FULL IMG HTML tag for the post featured image using TIMTHUMB or not a
 * **`$crop`** See TIMTHUMB documentation: http://www.binarymoon.co.uk/2011/03/timthumb-proportional-scaling-security-improvements/
 * **`$align`** See TIMTHUMB documentation: http://www.binarymoon.co.uk/2010/08/timthumb-part-4-moving-crop-location/
 
-*NOTE*: If jut one height or width is defined as zero (0) will conserve image proportion, if is not defined it will be default value.
+*NOTE*: If you just define one height or width as zero (0) the other one will conserve image proportion, if is not defined it will be default value.
 
 *TODO*: Get the attachment metadata to make the longdesc="" and alt="" IMG properties.
 
