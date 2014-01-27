@@ -71,6 +71,10 @@ The FOLDER "cache" must have write access any way.
 not needed.
 
 == Changelog ==
+= 0.3 =
+* Various code fixes.
+* TimThumb allow external images
+
 = 0.2 =
 * Various code fixes.
 * Better coding and comments.
