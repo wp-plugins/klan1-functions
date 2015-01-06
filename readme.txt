@@ -71,6 +71,10 @@ The FOLDER "cache" must have write access any way.
 not needed.
 
 == Changelog ==
+= 0.3.9 =
+* Various code fixes.
+* removed url encoded get parameters
+
 = 0.3.7 =
 * Various code fixes.
 * url encoded get parameters
