@@ -4,7 +4,7 @@
   Plugin Name: Klan1 Common WP Functions
   Plugin URI: http://www.klan1.com
   Description: Basic functions needed by our others plugins and templates.
-  Version: 0.3.7
+  Version: 0.3.8
   Author: Alejandro Trujillo J. - J0hnD03
   Author URI: http://www.facebook.com/j0hnd03
   Note: This pluging includes TimThumb by Ben Gillbanks and Mark Maunder
@@ -106,7 +106,7 @@ if (!defined("K1_FUNCTIONS")) {
             }
             $wp_thumb_url = k1_get_post_thumb_url($post_id);
             if (!empty($wp_thumb_url)) {
-                $img_code = K1_FUNCTIONS_TIMTHUMB_FILE . "?src=" . urlencode($wp_thumb_url) . "&amp;w=$width&amp;h=$height&amp;zc=$crop&amp;q=60&amp;a=$align";
+                $img_code = K1_FUNCTIONS_TIMTHUMB_FILE . "?src=" . ($wp_thumb_url) . "&amp;w=$width&amp;h=$height&amp;zc=$crop&amp;q=60&amp;a=$align";
                 return $img_code;
             } else {
                 return null;
