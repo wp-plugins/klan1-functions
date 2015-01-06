@@ -3,7 +3,7 @@ Contributors: k1-j0hnd03
 Donate link: http://klan1.com/
 Tags: developer, basic functions, klan1
 Requires at least: 2.7
-Tested up to: 3.7.1
+Tested up to: 4.1
 Stable tag: init
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -71,6 +71,10 @@ The FOLDER "cache" must have write access any way.
 not needed.
 
 == Changelog ==
+= 0.3.7 =
+* Various code fixes.
+* url encoded get parameters
+
 = 0.3 =
 * Various code fixes.
 * TimThumb allow external images
