@@ -14,37 +14,37 @@ Basic functions needed by our others plugins and templates.
 
 This functions are for those needs to resize images on their templates or plugins all the time.
 
-**FUNCTION: k1_get_post_thumb_url **
+**FUNCTION: k1_get_post_thumb_url**
 
-** DESCRIPTION **
+**DESCRIPTION**
 
-`string **k1_get_post_thumb_url**(int $post_id)`
+`string k1_get_post_thumb_url(int $post_id)`
 
 This function return the URL for the FEATURED IMAGE (full sized) defined in a POST/PAGE. If not defined returns the FIRST image if there is at least one. 
 
 Returns NULL if no images (jpg,png,gif) attachments.
 
-** USAGE EXAMPLE**
+**USAGE EXAMPLE**
 
 `<?php echo k1_get_post_thumb_url($post_id); ?>`
 
-** PARAMETERS **
+**PARAMETERS**
 
 * **`$post_id`** If is empty, we will try to get the POST ID from the global $post var
 
-**FUNCTION: k1_get_post_timthumb_img_url **
+**FUNCTION: k1_get_post_timthumb_img_url**
 
-** DESCRIPTION **
+**DESCRIPTION**
 
-`string **k1_get_post_timthumb_img_url**(int $post_id, int $width, int $height, int $crop, char $align)`
+`string k1_get_post_timthumb_img_url(int $post_id, int $width, int $height, int $crop, char $align)`
 
 Returns the IMAGE full URL using timthumb script to resize the post featured image. Use this when you only need the URL not the IMG html tag.
 
-** USAGE EXAMPLE**
+**USAGE EXAMPLE**
 
 `<?php echo k1_get_post_timthumb_img_url(null, 80, 50, 1, "t"); ?>`
 
-** PARAMETERS **
+**PARAMETERS**
 
 * **`$post_id`** If is empty, we will try to get the POST ID from the global $post var
 * **`$width`** This is numeric in pixels, if you use 0 width will be proportional to height. See: http://www.binarymoon.co.uk/demo/timthumb-basic/
@@ -54,19 +54,19 @@ Returns the IMAGE full URL using timthumb script to resize the post featured ima
 
 *NOTE*: If you just define one height or width as zero (0) the other one will conserve image proportion, if is not defined it will be default value.
 
-**FUNCTION: k1_get_post_thumb_img_html **
+**FUNCTION: k1_get_post_thumb_img_html**
 
-** DESCRIPTION **
+**DESCRIPTION**
 
-`string **k1_get_post_thumb_img_html**(int $post_id, boolean $resize, int $width, int $height, int $crop, char $align)`
+`string k1_get_post_thumb_img_html(int $post_id, boolean $resize, int $width, int $height, int $crop, char $align)`
 
 This function returns the FULL IMG HTML tag for the post featured image using TIMTHUMB or not as desired
 
-** USAGE EXAMPLE**
+**USAGE EXAMPLE**
 
 `<?php echo k1_get_post_thumb_img_html(null, true, 80, 50, 1, "t"); ?>`
 
-** PARAMETERS **
+**PARAMETERS**
 
 * **`$post_id`** If is empty, we will try to get the POST ID from the global $post var
 * **`$resize`** TRUE to use timthumb script to resize the image, FALSE to return the image without any dimension change.
