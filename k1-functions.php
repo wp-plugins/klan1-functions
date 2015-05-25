@@ -4,7 +4,7 @@
   Plugin Name: Klan1 Common WP Functions
   Plugin URI: http://www.klan1.com
   Description: Basic functions needed by our others plugins and templates.
-  Version: 0.3.9
+  Version: 0.4
   Author: Alejandro Trujillo J. - J0hnD03
   Author URI: http://www.facebook.com/j0hnd03
   Note: This pluging includes TimThumb by Ben Gillbanks and Mark Maunder
@@ -14,7 +14,7 @@
 
 /*
   Klan1 Common WP Functions (Wordpress Plugin)
-  Copyright (C) 2011-2013 Alejandro Trujillo J.
+  Copyright (C) 2011-2015 Alejandro Trujillo J.
   Contact me at http://www.klan1.com
 
   This program is free software: you can redistribute it and/or modify
@@ -33,7 +33,7 @@
 if (!defined("K1_FUNCTIONS")) {
 
     define("K1_FUNCTIONS", TRUE);
-    define("K1_FUNCTIONS_VER", 0.3);
+    define("K1_FUNCTIONS_VER", 0.4);
     define("K1_FUNCTIONS_URL", plugin_dir_url(__FILE__));
     define("K1_FUNCTIONS_PATH", plugin_dir_path(__FILE__));
     define("K1_FUNCTIONS_TIMTHUMB_FILE", K1_FUNCTIONS_URL . "tools/timthumb/timthumb.php");
@@ -106,7 +106,7 @@ if (!defined("K1_FUNCTIONS")) {
             }
             $wp_thumb_url = k1_get_post_thumb_url($post_id);
             if (!empty($wp_thumb_url)) {
-                $img_code = K1_FUNCTIONS_TIMTHUMB_FILE . "?src=" . ($wp_thumb_url) . "&w=$width&h=$height&zc=$crop&q=60&a=$align";
+                $img_code = K1_FUNCTIONS_TIMTHUMB_FILE . "?src=" . ($wp_thumb_url) . "&w=$width&h=$height&zc=$crop&q=100&a=$align";
                 return $img_code;
             } else {
                 return null;
