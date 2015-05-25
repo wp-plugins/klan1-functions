@@ -20,9 +20,9 @@ This functions are for those needs to resize images on their templates or plugin
 
 `string k1_get_post_thumb_url(int $post_id)`
 
-This function return the URL for the FEATURED IMAGE (full sized) defined in a POST/PAGE. If not defined returns the FIRST image if there is at least one. 
+This function return the URL for the FEATURED IMAGE (full sized) defined in a POST/PAGE. If is not defined returns the FIRST image if there is at least one. 
 
-Returns NULL if no images (jpg,png,gif) attachments.
+Returns NULL if no jpg,png or gif images as attachments.
 
 **USAGE EXAMPLE**
 
