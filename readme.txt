@@ -1,9 +1,9 @@
 === Klan1 Common WP Functions ===
 Contributors: k1-j0hnd03
 Donate link: http://klan1.com/
-Tags: developer, basic functions, klan1
+Tags: developer, basic functions, image resize, klan1
 Requires at least: 2.7
-Tested up to: 4.2.2
+Tested up to: 4.2.4
 Stable tag: init
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -20,7 +20,7 @@ This functions are for those needs to resize images on their templates or plugin
 
 `string k1_get_post_thumb_url(int $post_id)`
 
-This function return the URL for the FEATURED IMAGE (full sized) defined in a POST/PAGE. If is not defined returns the FIRST image if there is at least one. 
+This function return the URL for the FEATURED IMAGE (full sized) defined in a POST/PAGE even if the upload is no on the actual post. If is not defined returns the FIRST image if there is at least one. 
 
 Returns NULL if no jpg,png or gif images as attachments.
 
@@ -36,13 +36,13 @@ Returns NULL if no jpg,png or gif images as attachments.
 
 **DESCRIPTION**
 
-`string k1_get_post_timthumb_img_url(int $post_id, int $width, int $height, int $crop, char $align)`
+`string k1_get_post_timthumb_img_url(int $post_id, int $width, int $height, int $crop, char $align, int $quality)`
 
 Returns the IMAGE full URL using timthumb script to resize the post featured image. Use this when you only need the URL not the IMG html tag.
 
 **USAGE EXAMPLE**
 
-`<?php echo k1_get_post_timthumb_img_url(null, 80, 50, 1, "t"); ?>`
+`<?php echo k1_get_post_timthumb_img_url(null, 80, 50, 1, "t", 50); ?>`
 
 **PARAMETERS**
 
@@ -51,6 +51,7 @@ Returns the IMAGE full URL using timthumb script to resize the post featured ima
 * **`$height`** This is numeric in pixels, if you use 0 height will be proportional to height. See: http://www.binarymoon.co.uk/demo/timthumb-basic/
 * **`$crop`** Use: **0** Resize to Fit specified dimensions (no cropping), **1** Crop and resize to best fit the dimensions (default), **2** Resize proportionally to fit entire image into specified dimensions, and add borders if required, **3** Resize proportionally adjusting size of scaled image so there are no borders gaps, see: http://www.binarymoon.co.uk/demo/timthumb-zoom-crop/
 * **`$align`** **c** : position in the center (this is the default), **t** : align top, **tr** : align top right, **tl** : align top left, **b** : align bottom, **br** : align bottom right, **bl** : align bottom left, **l** : align left, **r** : align rightSee: http://www.binarymoon.co.uk/2010/08/timthumb-part-4-moving-crop-location/
+* **`$quality`** **70** : Image quality from the original uploaded image in percentage
 
 *NOTE*: If you just define one height or width as zero (0) the other one will conserve image proportion, if is not defined it will be default value.
 
@@ -58,13 +59,13 @@ Returns the IMAGE full URL using timthumb script to resize the post featured ima
 
 **DESCRIPTION**
 
-`string k1_get_post_thumb_img_html(int $post_id, boolean $resize, int $width, int $height, int $crop, char $align)`
+`string k1_get_post_thumb_img_html(int $post_id, boolean $resize, int $width, int $height, int $crop, char $align, int $quality)`
 
 This function returns the FULL IMG HTML tag for the post featured image using TIMTHUMB or not as desired
 
 **USAGE EXAMPLE**
 
-`<?php echo k1_get_post_thumb_img_html(null, true, 80, 50, 1, "t"); ?>`
+`<?php echo k1_get_post_thumb_img_html(null, true, 80, 50, 1, "t", 50); ?>`
 
 **PARAMETERS**
 
@@ -74,6 +75,7 @@ This function returns the FULL IMG HTML tag for the post featured image using TI
 * **`$height`** This is numeric in pixels, if you use 0 height will be proportional to height. See: http://www.binarymoon.co.uk/demo/timthumb-basic/
 * **`$crop`** Use: **0** Resize to Fit specified dimensions (no cropping), **1** Crop and resize to best fit the dimensions (default), **2** Resize proportionally to fit entire image into specified dimensions, and add borders if required, **3** Resize proportionally adjusting size of scaled image so there are no borders gaps, see: http://www.binarymoon.co.uk/demo/timthumb-zoom-crop/
 * **`$align`** **c** : position in the center (this is the default), **t** : align top, **tr** : align top right, **tl** : align top left, **b** : align bottom, **br** : align bottom right, **bl** : align bottom left, **l** : align left, **r** : align rightSee: http://www.binarymoon.co.uk/2010/08/timthumb-part-4-moving-crop-location/
+* **`$quality`** **70** : Image quality from the original uploaded image in percentage
 
 *NOTE*: If you just define one height or width as zero (0) the other one will conserve image proportion, if is not defined it will be default value.
 
@@ -107,6 +109,11 @@ The FOLDER "cache" must have write access any way.
 not needed.
 
 == Changelog ==
+
+= 0.5 =
+* 70% quality by default and now can be set by developer on function call with a parameter.
+* now the featured image can be used from another post, in < 0.4 everyone has to upload de image on the post by force
+* Readme.txt changed for better use understanding 
 
 = 0.4 =
 * 100% quality on thumb generation, was 60% before.

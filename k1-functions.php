@@ -4,7 +4,7 @@
   Plugin Name: Klan1 Common WP Functions
   Plugin URI: http://www.klan1.com
   Description: Basic functions needed by our others plugins and templates.
-  Version: 0.4
+  Version: 0.5
   Author: Alejandro Trujillo J. - J0hnD03
   Author URI: http://www.facebook.com/j0hnd03
   Note: This pluging includes TimThumb by Ben Gillbanks and Mark Maunder
@@ -33,7 +33,7 @@
 if (!defined("K1_FUNCTIONS")) {
 
     define("K1_FUNCTIONS", TRUE);
-    define("K1_FUNCTIONS_VER", 0.4);
+    define("K1_FUNCTIONS_VER", 0.5);
     define("K1_FUNCTIONS_URL", plugin_dir_url(__FILE__));
     define("K1_FUNCTIONS_PATH", plugin_dir_path(__FILE__));
     define("K1_FUNCTIONS_TIMTHUMB_FILE", K1_FUNCTIONS_URL . "tools/timthumb/timthumb.php");
@@ -55,20 +55,30 @@ if (!defined("K1_FUNCTIONS")) {
                     return new WP_Error('no $post_id', __("\$post_id is unknow on " . __FUNCTION__ . "()"));
                 }
             }
-            $thumb_args = array(
-                'post_type' => 'attachment',
-                'post_mime_type' => 'image/jpeg,image/png,image/gif',
-                'post_status' => 'any',
-                'post_parent' => $post_id,
-                'include' => get_post_thumbnail_id($post_id)
-            );
 
-            $wp_thumb_url = get_posts($thumb_args);
-
-            if (!empty($wp_thumb_url[0])) {
-                return $wp_thumb_url[0]->guid;
+            if (has_post_thumbnail($post_id)) {
+                $large_image_url = wp_get_attachment_image_src( get_post_thumbnail_id( $post_id ), 'full' );
+//                echo "<--- K1 ";
+//                var_dump($large_image_url[0]);
+//                echo " -->";
+                return $large_image_url[0];
+                
             } else {
-                return null;
+                $thumb_args = array(
+                    'post_type' => 'attachment',
+                    'post_mime_type' => 'image/jpeg,image/png,image/gif',
+                    'post_status' => 'any',
+                    'post_parent' => $post_id,
+                    'include' => get_post_thumbnail_id($post_id)
+                );
+
+                $wp_thumb_url = get_posts($thumb_args);
+
+                if (!empty($wp_thumb_url[0])) {
+                    return $wp_thumb_url[0]->guid;
+                } else {
+                    return null;
+                }
             }
         }
 
@@ -95,7 +105,7 @@ if (!defined("K1_FUNCTIONS")) {
          * @return \WP_Error|null
          */
         //OLD: k1_get_thumb_img_url
-        function k1_get_post_timthumb_img_url($post_id = null, $width = 0, $height = 0, $crop = 1, $align = "t") {
+        function k1_get_post_timthumb_img_url($post_id = null, $width = 0, $height = 0, $crop = 1, $align = "t", $quality = 70) {
             if (empty($post_id)) {
                 global $post;
                 if (!empty($post->ID)) {
@@ -106,7 +116,7 @@ if (!defined("K1_FUNCTIONS")) {
             }
             $wp_thumb_url = k1_get_post_thumb_url($post_id);
             if (!empty($wp_thumb_url)) {
-                $img_code = K1_FUNCTIONS_TIMTHUMB_FILE . "?src=" . ($wp_thumb_url) . "&w=$width&h=$height&zc=$crop&q=100&a=$align";
+                $img_code = K1_FUNCTIONS_TIMTHUMB_FILE . "?src=" . ($wp_thumb_url) . "&w={$width}&h={$height}&zc={$crop}&q={$quality}&a={$align}&v=" . K1_FUNCTIONS_VER;
                 return $img_code;
             } else {
                 return null;
@@ -116,8 +126,18 @@ if (!defined("K1_FUNCTIONS")) {
         // Compatibility with our old function names 
         if (!function_exists("k1_get_thumb_img_url")) {
 
-            function k1_get_thumb_img_url($post_id = null, $width = 0, $height = 0, $crop = 1, $align = "t") {
-                return k1_get_post_timthumb_img_url($post_id, $width, $height, $crop, $align);
+            /**
+             * Backward compatibility with old thems using this
+             * @param type $post_id
+             * @param type $width
+             * @param type $height
+             * @param type $crop
+             * @param type $align
+             * @param type $quality
+             * @return type
+             */
+            function k1_get_thumb_img_url($post_id = null, $width = 0, $height = 0, $crop = 1, $align = "t", $quality = 70) {
+                return k1_get_post_timthumb_img_url($post_id, $width, $height, $crop, $align, $quality);
             }
 
         }
@@ -138,7 +158,7 @@ if (!defined("K1_FUNCTIONS")) {
          * TODO: Get the attachment metadata to make the longdesc="" and alt="" IMG properties.
          */
         // OLD: k1_get_thumb_img
-        function k1_get_post_thumb_img_html($post_id = null, $resize = false, $width = 0, $height = 0, $crop = 1, $align = "t") {
+        function k1_get_post_thumb_img_html($post_id = null, $resize = false, $width = 0, $height = 0, $crop = 1, $align = "t", $quality = 70) {
             if (empty($post_id)) {
                 global $post;
                 if (!empty($post->ID)) {
@@ -148,7 +168,7 @@ if (!defined("K1_FUNCTIONS")) {
                 }
             }
             $wp_thumb_url = k1_get_post_thumb_url($post_id);
-            $timthumb_url = k1_get_post_timthumb_img_url($post_id, $width, $height, $crop, $align);
+            $timthumb_url = k1_get_post_timthumb_img_url($post_id, $width, $height, $crop, $align, $quality);
             if (!empty($wp_thumb_url) && !empty($timthumb_url)) {
                 if ($resize) {
                     $img_code = "<img src='{$timthumb_url}' width='$width' height='$height' />";
@@ -164,8 +184,19 @@ if (!defined("K1_FUNCTIONS")) {
         // Compatibility with our old function names 
         if (!function_exists("k1_get_thumb_img")) {
 
-            function k1_get_thumb_img($post_id = null, $resize = false, $width = 0, $height = 0, $crop = 1, $align = "t") {
-                return k1_get_post_thumb_img_html($post_id, $resize, $width, $height, $crop, $align);
+            /**
+             *  Backward compatibility with old thems using this
+             * @param type $post_id
+             * @param type $resize
+             * @param type $width
+             * @param type $height
+             * @param type $crop
+             * @param type $align
+             * @param type $quality
+             * @return type
+             */
+            function k1_get_thumb_img($post_id = null, $resize = false, $width = 0, $height = 0, $crop = 1, $align = "t", $quality = 70) {
+                return k1_get_post_thumb_img_html($post_id, $resize, $width, $height, $crop, $align, $quality);
             }
 
         }
